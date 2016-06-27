@@ -71,26 +71,9 @@ namespace Configgy.Source
         /// </summary>
         public bool Get(string valueName, PropertyInfo property, out string value)
         {
-            ISet<Type> sourcesToIgnore = new HashSet<Type>();
-            if (property != null)
-            {
-                sourcesToIgnore.UnionWith(property
-                    .GetCustomAttributes(true)
-                    .OfType<PreventSourceAttribute>()
-                    .Select(x => x.SourceType)
-                    .Where(x => x != null));
-            }
-
-            // Get each un-ignored source in turn
-            foreach (var source in _sources.Where(x => !sourcesToIgnore.Contains(x.GetType())))
-            {
-                // If a source has the value then return that value
-                if (source.Get(valueName, property, out value)) return true;
-            }
-
-            // No source has the value
-            value = null;
-            return false;
+            return _sources
+                .Select(s => s.GetRawValue(valueName, property))
+                .FirstOrDefault(v => !string.IsNullOrEmpty(v));
         }
     }
 }
