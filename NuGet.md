@@ -6,7 +6,7 @@ Notes for creating and updating the nuget package
 
 To create the NuGet package:
 
-1. Update the Configgy.nuspec as necessary
+1. Update the Configgy.Encrypter.nuspec as necessary
     * Pay special attention to the 'releaseNotes' element
     * Leave all the variables (the things inside $dollar signs$) alone - they are populated from metadata in AssemblyInfo.cs
 2. Update the version numbers in AssemblyInfo.cs
